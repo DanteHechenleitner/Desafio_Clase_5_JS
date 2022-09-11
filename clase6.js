@@ -8,18 +8,34 @@ const productos =[
         nombreArticulo: "Maquina",
         precio: 5,
         cantidad:5,
-    }
+    },
+    {
+        id: 2,
+        codigo: "ED02",
+        nombreArticulo: "Ranger260",
+        precio: 2500,
+        cantidad:7
+    },
+    {
+        id: 3,
+        codigo: "ED03",
+        nombreArticulo: "Torcha",
+        precio: 15,
+        cantidad:8
+    },
 ]
   
 
 while(opcion !== 0){
-    opcion = Number(prompt("Ingresar una opcion: \n -1 Agregar producto \n -2 Mostrar Productos \n -0 Salir"));
+    let codigo;
+    let nombreArticulo;
+    let precio; 
+    let cantidad; 
+    
+    opcion = Number(prompt("Ingresar una opcion: \n -1 Agregar producto nuevo \n -2 Mostrar Productos \n -3 Buscar Producto \n -0 Salir"));
     switch (opcion) {
         case 1:
-            let codigo = prompt("Codigo: ");
-            let nombreArticulo = prompt("Nombre del Articulo:");
-            let precio = Number(prompt("Costo del producto:"));
-            let cantidad = Number(prompt("Cantidad:"));
+
             const id = crearID() + 1;
             function validar (parametro){
                 if (parametro == codigo){
@@ -54,26 +70,44 @@ while(opcion !== 0){
         case 2 :
             mostrarProductos()
             break;
+
+        case 3 :
+            validar(codigo)
+            buscarPorductos(codigo)
+            break;
+
         case 0 :
             alert("Si quiere cargar un producto, reiniciar la pagina")
             break;
-       
+        
     }
 }
 
 
 
 function crearProducto(id, codigo, nombreArticulo, precio, cantidad){
-  productos.push({
-    id,
-    codigo,
-    nombreArticulo,
-    precio,
-    cantidad,
-  })
+    const resultado = productos.some((el) => el.codigo === codigo)
+    if(resultado == true){
+        alert("El codigo del producto ya existe")
+    }else{
+        productos.push({
+            id,
+            codigo,
+            nombreArticulo,
+            precio,
+            cantidad,
+        })
+    }
+    
   console.log(productos)
 }
   
+
+function buscarPorductos(codigo){
+    const res = productos.filter((productos) => productos.codigo === codigo).map((producto) => producto.codigo + "-" + producto.nombreArticulo + "-" + "Cantidad: " + producto.cantidad);
+    alert("Producto: " + res)
+}
+
 
 
 
@@ -84,3 +118,4 @@ function mostrarProductos(){
 function crearID(){
     return productos.length;
 }
+
